@@ -1,0 +1,13 @@
+.list {
+  margin-bottom: 10px;
+  list-style-type: none;
+  padding: 0px;
+}
+
+.delButton {
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid gainsboro;
+  border-radius: 5px;
+}
