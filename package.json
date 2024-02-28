@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://kwiskowski.github.io/goit-react-hw-06-phonebook/",
   "dependencies": {
+    "@redux-devtools/extension": "^3.3.0",
     "components": "^0.1.0",
     "eslint-config-react-app": "^7.0.1",
     "nanoid": "^5.0.6",
