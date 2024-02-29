@@ -1,38 +1,26 @@
-import { Component } from 'react';
-import css from './PhonebookList.module.css';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { getContacts, getFilter } from 'components/redux/selectors';
+import PhonebookItem from 'components/PhonebookItem/PhonebookItem';
 
-export class PhonebookList extends Component {
-  handleDelete = id => {
-    const { value } = id.target;
-    this.props.onClick(value);
-  };
+const getFilteredContacts = (contacts, filter) => {
+  const normalizedFilter = filter.toLowerCase();
+  return contacts.filter(contact =>
+    contact.name.toLowerCase().includes(normalizedFilter)
+  );
+};
 
-  render() {
-    const { contacts } = this.props;
+function PhonebookList() {
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+  const filteredContacts = getFilteredContacts(contacts, filter);
 
-    return (
-      <ul>
-        {contacts.map(contact => {
-          return (
-            <li key={contact.id} className={css.listEl}>
-              {contact.name}: {contact.number}
-              <button
-                type="submit"
-                value={contact.id}
-                onClick={this.handleDelete}
-                className={css.delButton}
-              >
-                Delete
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    );
-  }
+  return (
+    <ul>
+      {filteredContacts.map(({ id, name, number }) => (
+        <PhonebookItem key={id} contact={{ id, name, number }} />
+      ))}
+    </ul>
+  );
 }
 
-PhonebookList.propTypes = {
-  onClick: PropTypes.func.isRequired,
-};
+export default PhonebookList;

@@ -1,24 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilter } from 'components/redux/selectors';
+import { setContactsFilter } from 'components/redux/filterSlice';
 import css from './PhonebookFilter.module.css';
 
-export function Filter({ value, onChangeFilter }) {
+function Filter() {
+  const dispatch = useDispatch();
+
+  const handleFilterChange = e => {
+    dispatch(setContactsFilter(e.target.value));
+  };
+
   return (
-    <div>
-      <label className={css.label}>
-        Find contacts by name
-        <input
-          className={css.input}
-          type="text"
-          value={value}
-          onChange={onChangeFilter}
-        />
-      </label>
-    </div>
+    <input
+      className={css.filterInput}
+      type="text"
+      name="filter"
+      placeholder="Search by name"
+      value={useSelector(getFilter)}
+      onChange={handleFilterChange}
+      disabled={useSelector(getContacts).length === 0}
+    />
   );
 }
 
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChangeFilter: PropTypes.func.isRequired,
-};
+export default Filter;
